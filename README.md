@@ -6,6 +6,8 @@
 
 在线体验：<https://jylai0726.github.io/earth-web/>
 
+离线版下载：<https://github.com/jylai0726/earth-web/releases/latest>
+
 一个使用 Three.js 制作的三维宇宙探索页面：真实天体纹理、连续的多尺度镜头、可交互的太阳系与程序生成的银河。构建后的 `index.html` 已内嵌全部脚本与纹理，**双击即可离线运行**，不需要服务器、CDN 或任何网络请求。
 
 ![地球](docs/preview-earth.png)
