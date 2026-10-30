@@ -6,6 +6,8 @@ Source: <https://github.com/jylai0726/earth-web>
 
 Live: <https://jylai0726.github.io/earth-web/>
 
+Offline download: <https://github.com/jylai0726/earth-web/releases/latest>
+
 A Three.js space exploration page with real planetary textures, a continuous multi-scale camera, an interactive solar system and a procedurally generated galaxy. The built `index.html` embeds every script and texture, so it runs **offline by double-clicking**, with no server, CDN or network request.
 
 ![Earth](docs/preview-earth.png)
