@@ -1,0 +1,15 @@
+ORBIT · 宇宙漫游
+Copyright (c) 2026
+
+This product is an independent re-creation inspired by the open-source project
+ORBIT (https://github.com/ryh842487118-bot/orbit), licensed under the
+Apache License, Version 2.0.
+
+The original project's name, interface language and material organisation were
+used as references. All source code in this repository was written for this
+implementation. The original project's name and repository address are retained
+here in acknowledgement, as required by Section 4 of the Apache License 2.0.
+
+Planetary textures are provided by Solar System Scope
+(https://www.solarsystemscope.com/textures/) under CC BY 4.0.
+Three.js is licensed under the MIT license; see assets/THREE-LICENSE.txt.

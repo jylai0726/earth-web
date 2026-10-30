@@ -1,0 +1,16 @@
+{
+  "name": "orbit-universe",
+  "version": "1.0.0",
+  "description": "ORBIT · 宇宙漫游 — Three.js 多尺度宇宙探索单文件页面",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "npx --yes serve -l 4173 ."
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "three": "^0.187.0"
+  }
+}
