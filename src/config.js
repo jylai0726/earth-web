@@ -7,6 +7,8 @@ export const CONFIG = Object.assign({
   siteUrl: 'https://jylai0726.github.io/earth-web/',
   repoUrl: 'https://github.com/jylai0726/earth-web',
   projectName: 'ORBIT',
+  // 独立离线版：隐藏 GitHub 与线上体验入口（构建时 --standalone 注入）
+  standalone: false,
   // 渲染：桌面端像素比上限、移动端像素比上限
   maxPixelRatio: 1.75,
   mobilePixelRatio: 1.35,

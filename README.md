@@ -66,6 +66,14 @@ npm run build
 
 产物写入根目录的 `index.html`，体积约 9 MB（其中纹理约 6 MB）。构建过程不访问网络。
 
+### 独立离线版
+
+生成一份隐藏 GitHub 与线上体验入口、可双击直接运行的单文件版本：
+
+```bash
+node build.mjs --standalone --out ../earth-web/index.html
+```
+
 ## 项目结构
 
 ```text

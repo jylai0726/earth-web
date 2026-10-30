@@ -57,6 +57,10 @@ export function createUI({
 
   $('#github-link').href = CONFIG.repoUrl;
   $('#site-link').href = CONFIG.siteUrl;
+  if (CONFIG.standalone) {
+    $('#github-link').style.display = 'none';
+    $('#site-link').style.display = 'none';
+  }
   $('#home').addEventListener('click', event => {
     event.preventDefault();
     onView?.('earth');

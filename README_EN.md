@@ -66,6 +66,12 @@ npm run build
 
 The result is `index.html` (about 9 MB, with roughly 6 MB of textures). The build makes no network requests.
 
+### Standalone offline build
+
+Create a single-file build with the GitHub and live-site entries hidden:/n/n```bash
+node build.mjs --standalone --out ../earth-web/index.html
+```
+
 ## Structure
 
 ```text

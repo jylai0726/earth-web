@@ -67,12 +67,25 @@ async function minifyCSS() {
 }
 
 async function main() {
-  const [shell, css, js, assets] = await Promise.all([
+  const args = process.argv.slice(2);
+  const standalone = args.includes('--standalone');
+  const outIndex = args.indexOf('--out');
+  const outFile = outIndex >= 0 ? args[outIndex + 1] : 'index.html';
+
+  const [shellSource, css, js, assets] = await Promise.all([
     read('src/shell.html'),
     minifyCSS(),
     bundleJS(),
     inlineAssets(),
   ]);
+
+  let shell = shellSource;
+  if (standalone) {
+    shell = shell.replace(
+      '<script>/* INLINE_JS */</script>',
+      '<script>window.ORBIT_CONFIG = { standalone: true };</script>\n  <script>/* INLINE_JS */</script>'
+    );
+  }
 
   let html = shell
     .replace('/* INLINE_CSS */', () => css)
@@ -83,10 +96,10 @@ async function main() {
     throw new Error('仍有占位符未被替换');
   }
 
-  const output = path.join(root, 'index.html');
+  const output = path.resolve(root, outFile);
   await writeFile(output, html, 'utf8');
   const info = await stat(output);
-  console.log(`index.html  ${(info.size / 1024 / 1024).toFixed(2)} MB`);
+  console.log(`${path.relative(root, output)}  ${(info.size / 1024 / 1024).toFixed(2)} MB`);
   console.log(`  纹理原始体积 ${(assets.bytes / 1024 / 1024).toFixed(2)} MB`);
 }
 
