@@ -241,7 +241,9 @@ async function boot() {
     }
   }
 
-  function focus(id, { instant = false } = {}) {    if (id === 'galaxy') return goView('galaxy');
+  function focus(id, { instant = false } = {}) {
+    if (id === 'galaxy-sun') id = 'sun';
+    if (id === 'galaxy') return goView('galaxy');
     if (id === 'earth' && state.stage === 'galaxy') return goView('earth');
 
     let anchor;
@@ -385,7 +387,7 @@ async function boot() {
       state.focusId = 'sun';
       rig.setLimits(world.bodies.sun.radius);
       rig.setComposition(compositionFor('sun'), 0.05);
-      const distance = mobile ? 11200 : 4050;
+      const distance = mobile ? 11200 : 3700;
       if (instant) {
         rig.setAnchor(sunAnchor, { distance, yaw: -0.7, pitch: 0.66 });
       } else {

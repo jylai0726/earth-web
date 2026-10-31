@@ -16,6 +16,8 @@ const gauss = () => {
    ============================================================ */
 
 const EARTH_VERT = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_vertex>
   varying vec2 vUv;
   varying vec3 vNormalW;
   varying vec3 vPosW;
@@ -25,10 +27,13 @@ const EARTH_VERT = /* glsl */`
     vec4 world = modelMatrix * vec4(position, 1.0);
     vPosW = world.xyz;
     gl_Position = projectionMatrix * viewMatrix * world;
+    #include <logdepthbuf_vertex>
   }
 `;
 
 const EARTH_FRAG = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_fragment>
   uniform sampler2D dayMap;
   uniform sampler2D nightMap;
   uniform vec3 sunDir;
@@ -38,6 +43,7 @@ const EARTH_FRAG = /* glsl */`
   varying vec3 vPosW;
 
   void main() {
+    #include <logdepthbuf_fragment>
     vec3 N = normalize(vNormalW);
     vec3 V = normalize(cameraPosition - vPosW);
     float ndl = dot(N, sunDir);
@@ -71,6 +77,8 @@ const EARTH_FRAG = /* glsl */`
 `;
 
 const CLOUD_FRAG = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_fragment>
   uniform sampler2D cloudMap;
   uniform vec3 sunDir;
   uniform float opacity;
@@ -79,6 +87,7 @@ const CLOUD_FRAG = /* glsl */`
   varying vec3 vPosW;
 
   void main() {
+    #include <logdepthbuf_fragment>
     vec3 N = normalize(vNormalW);
     vec3 V = normalize(cameraPosition - vPosW);
     float ndl = dot(N, sunDir);
@@ -100,12 +109,15 @@ const CLOUD_FRAG = /* glsl */`
 `;
 
 const ATMO_FRAG = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_fragment>
   uniform vec3 sunDir;
   uniform vec3 glowColor;
   varying vec3 vNormalW;
   varying vec3 vPosW;
 
   void main() {
+    #include <logdepthbuf_fragment>
     vec3 N = normalize(vNormalW);
     vec3 V = normalize(cameraPosition - vPosW);
     float fres = pow(1.0 - abs(dot(N, V)), 3.1);
@@ -119,6 +131,8 @@ const ATMO_FRAG = /* glsl */`
 `;
 
 const SUN_FRAG = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_fragment>
   uniform sampler2D map;
   uniform float time;
   varying vec2 vUv;
@@ -126,6 +140,7 @@ const SUN_FRAG = /* glsl */`
   varying vec3 vPosW;
 
   void main() {
+    #include <logdepthbuf_fragment>
     vec2 uv = vUv;
     vec3 base = texture2D(map, uv).rgb;
     float detail = texture2D(map, uv * 3.0 + vec2(time * 0.004, 0.0)).r;
@@ -143,6 +158,8 @@ const SUN_FRAG = /* glsl */`
 `;
 
 const GALAXY_VERT = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_vertex>
   attribute float aSize;
   attribute vec3 aColor;
   attribute float aSeed;
@@ -159,15 +176,19 @@ const GALAXY_VERT = /* glsl */`
     vColor = aColor * twinkle;
     vAlpha = smoothstep(400.0, 2400.0, d);
     gl_Position = projectionMatrix * mv;
+    #include <logdepthbuf_vertex>
   }
 `;
 
 const GALAXY_FRAG = /* glsl */`
+  #include <common>
+  #include <logdepthbuf_pars_fragment>
   uniform float uOpacity;
   varying vec3 vColor;
   varying float vAlpha;
 
   void main() {
+    #include <logdepthbuf_fragment>
     vec2 c = gl_PointCoord - 0.5;
     float r = length(c);
     if (r > 0.5) discard;
@@ -322,7 +343,7 @@ export function createWorld(scene, textures, { mobile = false, pixelRatio = 1 } 
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   }));
-  coronaOuter.scale.setScalar(sunDef.radius * 20);
+  coronaOuter.scale.setScalar(sunDef.radius * 26);
   sunGroup.add(coronaOuter);
 
   const sunLight = new THREE.PointLight(0xfff3df, 3.1, 0, 0);
@@ -947,8 +968,8 @@ export function createWorld(scene, textures, { mobile = false, pixelRatio = 1 } 
       const apparent = body.radius / Math.max(distance, 0.001);
       const far = THREE.MathUtils.smoothstep(apparent, 0.00001, 0.00012);
       const near = THREE.MathUtils.smoothstep(distance, 90, 900);
-      body.glow.material.opacity = far * near * 0.72;
-      body.glow.scale.setScalar(Math.max(body.radius * 1.8, distance * 0.013));
+      body.glow.material.opacity = far * near * 0.85;
+      body.glow.scale.setScalar(Math.max(body.radius * 1.8, distance * 0.019));
       body.glow.visible = body.glow.material.opacity > 0.01;
     }
 
